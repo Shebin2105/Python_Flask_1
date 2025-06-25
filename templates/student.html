@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>College Admission Form</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-aw esome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+</head>
+<body>
+
+<div class="form-box">
+    <div class="form-header">
+        <h1>College Admission Form</h1>
+    </div>
+    <form method="post">
+        <div class="form-group">
+            <label for="name"><i class="fa-solid fa-user"></i> Name</label>
+            <div class="input-wrapper">
+                <input type="text" id="name" name="name" placeholder="Enter your name"
+                    value="{{ form_data.get('name', '') }}"
+                    class="{% if field_errors.get('name') %}error-input{% endif %}" required>
+                {% if field_errors.get('name') %}
+                <p class="error">{{ field_errors['name'] }}</p>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="dob"><i class="fa-solid fa-calendar-days"></i> Date of Birth</label>
+            <div class="input-wrapper">
+                <input type="date" id="dob" name="dob" value="{{ form_data.get('dob', '') }}" required>
+                {% if field_errors.get('dob') %}
+                <p class="error">{{ field_errors['dob'] }}</p>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="course"><i class="fa-solid fa-graduation-cap"></i> Course</label>
+            <div class="input-wrapper">
+                <select id="course" name="course" required>
+                    <option disabled {% if not form_data.get('course') %}selected{% endif %}>Select Course</option>
+                    <option value="B.E. Mechanical" {% if form_data.get('course') == 'B.E. Mechanical' %}selected{% endif %}>B.E. Mechanical</option>
+                    <option value="B.E. CS" {% if form_data.get('course') == 'B.E. CS' %}selected{% endif %}>B.E. CS</option>
+                    <option value="B.E. ECE" {% if form_data.get('course') == 'B.E. ECE' %}selected{% endif %}>B.E. ECE</option>
+                    <option value="B.E. Aeronautical" {% if form_data.get('course') == 'B.E. Aeronautical' %}selected{% endif %}>B.E. Aeronautical</option>
+                    <option value="B.E. Bio Medical" {% if form_data.get('course') == 'B.E. Bio Medical' %}selected{% endif %}>B.E. Bio Medical</option>
+                </select>
+                {% if field_errors.get('course') %}
+                <p class="error">{{ field_errors['course'] }}</p>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="HSC-MARKS"><i class="fa-solid fa-chart-line"></i> Hsc-Marks</label>
+            <div class="input-wrapper">
+                <input type="number" id="HSC-MARKS" name="HSC-MARKS" placeholder="Enter HSC Marks"
+                    value="{{ form_data.get('HSC-MARKS', '') }}"
+                    class="{% if field_errors.get('marks') %}error-input{% endif %}" required>
+                {% if field_errors.get('marks') %}
+                <p class="error">{{ field_errors['marks'] }}</p>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="hostel"><i class="fa-solid fa-building"></i> Hostel</label>
+            <div class="input-wrapper">
+                <select id="hostel" name="hostel">
+                    <option disabled {% if not form_data.get('hostel') %}selected{% endif %}>Select Hostel Requirement</option>
+                    <option value="YES" {% if form_data.get('hostel') == 'YES' %}selected{% endif %}>YES</option>
+                    <option value="NO" {% if form_data.get('hostel') == 'NO' %}selected{% endif %}>NO</option>
+                </select>
+                {% if field_errors.get('hostel') %}
+                <p class="error">{{ field_errors['hostel'] }}</p>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="Address"><i class="fa-solid fa-location-dot"></i> Address</label>
+            <div class="input-wrapper">
+                <input type="text" id="Address" name="Address" placeholder="Enter Address"
+                    value="{{ form_data.get('Address', '') }}"
+                    class="{% if field_errors.get('address') %}error-input{% endif %}" required>
+                {% if field_errors.get('address') %}
+                <p class="error">{{ field_errors['address'] }}</p>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="contact-no"><i class="fa-solid fa-phone"></i> Contact Number</label>
+            <div class="input-wrapper">
+                <input type="tel" id="contact-no" name="contact-no" placeholder="Enter Contact Number"
+                    value="{{ form_data.get('contact-no', '') }}"
+                    class="{% if field_errors.get('contact') %}error-input{% endif %}" required>
+                {% if field_errors.get('contact') %}
+                <p class="error">{{ field_errors['contact'] }}</p>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="email"><i class="fa-solid fa-envelope"></i> Email</label>
+            <div class="input-wrapper">
+                <input type="email" id="email" name="email" placeholder="Enter Email"
+                    value="{{ form_data.get('email', '') }}"
+                    class="{% if field_errors.get('email') %}error-input{% endif %}" required>
+                {% if field_errors.get('email') %}
+                <p class="error">{{ field_errors['email'] }}</p>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="form-group" style="justify-content: center;">
+            <button type="submit" class="submit-button">Apply Now</button>
+        </div>
+    </form>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
+{% with messages = get_flashed_messages(with_categories=true) %}
+{% if messages %}
+<script>
+    toastr.options = {
+        "positionClass": "toast-bottom-left",
+        "closeButton": true,
+    };
+    window.onload = function () {
+        {% for category, message in messages %}
+        {% if category == 'success' %}
+        toastr.success("{{ message }}");
+        {% else %}
+        toastr.error("{{ message }}");
+        {% endif %}
+        {% endfor %}
+    };
+</script>
+{% endif %}
+{% endwith %}
+</body>
+</html>
